@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Case Study — RFM Customer Intelligence Engine | Alex Ramzi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg: #f9f9f8;
+  --surface: #ffffff;
+  --border: #e8e8e4;
+  --text-primary: #1a1a18;
+  --text-secondary: #5a5a56;
+  --text-muted: #9a9a94;
+  --accent: #1a56db;
+  --accent-bg: #eff4ff;
+  --accent-text: #1a56db;
+  --success: #057a55;
+  --radius: 8px;
+}
+
+body {
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: var(--bg);
+  padding: 0;
+}
+
+.container {
+  max-width: 680px;
+  margin: 0 auto;
+  padding: 4rem 1.5rem 6rem;
+}
+
+.eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.hero-title {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 1.2;
+  color: var(--text-primary);
+  margin-bottom: 1.25rem;
+  letter-spacing: -0.02em;
+}
+
+.hero-sub {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 2.5rem;
+  max-width: 560px;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 3rem;
+}
+
+.metric-card {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem 1rem;
+}
+
+.metric-num {
+  font-size: 30px;
+  font-weight: 500;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 6px;
+  letter-spacing: -0.02em;
+}
+
+.metric-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.divider {
+  border: none;
+  border-top: 0.5px solid var(--border);
+  margin: 2.5rem 0;
+}
+
+.section-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 0.75rem;
+}
+
+.body-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.problem-block {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+}
+
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.step-row {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.step-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  color: var(--accent-text);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.step-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 3px;
+}
+
+.step-body {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.result-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.result-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.result-check {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  color: var(--success);
+}
+
+.result-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+.result-text strong {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.cta-block {
+  background: var(--surface);
+  border: 0.5px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.cta-text {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.cta-text strong {
+  color: var(--text-primary);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.cta-btn {
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.cta-btn:hover {
+  opacity: 0.9;
+}
+
+.nav {
+  border-bottom: 0.5px solid var(--border);
+  background: var(--surface);
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.nav-link {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.nav-link:hover {
+  color: var(--text-primary);
+}
+
+@media (max-width: 480px) {
+  .metrics-grid { grid-template-columns: 1fr; }
+  .hero-title { font-size: 24px; }
+  .cta-block { flex-direction: column; align-items: flex-start; }
+  .metric-num { font-size: 24px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <span class="nav-name">Alex Ramzi</span>
+  <a class="nav-link" href="https://github.com/alexramzi01/rfm-customer-intelligence">View on GitHub →</a>
+</nav>
+
+<div class="container">
+
+  <p class="eyebrow">Case study — International payments platform</p>
+  <h1 class="hero-title">From reactive to predictive: retaining VIP customers before they leave</h1>
+  <p class="hero-sub">A customer intelligence system deployed on a live e-commerce platform with over 1,000,000 customers — built to flag churn risk weeks before it happens.</p>
+
+  <div class="metrics-grid">
+    <div class="metric-card">
+      <div class="metric-num">1M+</div>
+      <div class="metric-label">customers on the platform</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">80%</div>
+      <div class="metric-label">prediction accuracy on at-risk VIPs</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-num">50%</div>
+      <div class="metric-label">win-back rate after intervention</div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">The problem</p>
+  <div class="problem-block">
+    <p class="body-text">The business had no way to distinguish which VIP customers were drifting toward churn from those who were simply between purchases. Without a forward-looking signal, the team could only react — reaching out after the customer had already left, or spending retention budget equally across all segments regardless of risk.</p>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">What was built</p>
+  <div class="step-list">
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div>
+        <p class="step-title">23+ dynamic customer segments</p>
+        <p class="step-body">Each customer is scored on Recency, Frequency, and Monetary value each period — and labeled across 23+ segments including VIP, At Risk, Lost High Value, and Returned.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div>
+        <p class="step-title">Churn direction + speed + acceleration</p>
+        <p class="step-body">For each customer, the system tracks how fast they are moving toward or away from churn — not just where they are today. This catches early drift weeks before a label change.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div>
+        <p class="step-title">Monthly prioritized VIP watchlist</p>
+        <p class="step-body">Each month, the system outputs a ranked list of the VIP customers most likely to become At Risk — so the team intervenes early, not after the fact.</p>
+      </div>
+    </div>
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div>
+        <p class="step-title">Power BI scenario simulation</p>
+        <p class="step-body">Management can model forward-looking scenarios: "What if 15% of our VIPs go dormant this quarter?" — and see the revenue impact before it happens.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider">
+
+  <p class="section-label">Results</p>
+  <div class="result-list">
+    <div class="result-row">
+      <svg class="result-check" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="result-text"><strong>8 out of 10 flagged customers confirmed at-risk</strong> in the following period — 80% prediction accuracy on the top watchlist.</p>
+    </div>
+    <div class="result-row">
+      <svg class="result-check" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="result-text"><strong>4 out of 8 at-risk VIPs were retained</strong> through targeted interventions — personalized outreach, issue resolution, and gifts — a 50% win-back rate.</p>
+    </div>
+    <div class="result-row">
+      <svg class="result-check" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="result-text"><strong>Recovery budget was concentrated on high-value lost customers</strong> — not spread equally — by automatically separating high-value from low-value lost segments.</p>
+    </div>
+    <div class="result-row">
+      <svg class="result-check" viewBox="0 0 20 20" fill="none">
+        <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M6.5 10l2.5 2.5 4.5-4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <p class="result-text"><strong>Management shifted from historical reporting to forward-looking decisions</strong> — using scenario simulation to plan retention actions before churn occurred.</p>
+    </div>
+  </div>
+
+  <div class="cta-block">
+    <div class="cta-text">
+      <strong>Interested in this for your business?</strong>
+      Built for e-commerce operations with 500+ active customers. Open to freelance projects.
+    </div>
+    <a class="cta-btn" href="https://github.com/alexramzi01/rfm-customer-intelligence">View project →</a>
+  </div>
+
+</div>
+</body>
+</html>
